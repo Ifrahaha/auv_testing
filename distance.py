@@ -29,7 +29,7 @@ KNOWN_WIDTH = 11.0
 # load the furst image that contains an object that is KNOWN TO BE 2 feet
 # from our camera, then find the paper marker in the image, and initialize
 # the focal length
-image = cv2.imread("images/2ft.png")
+image = cv2.imread("/home/crossfire/Programming projects/auv_testing/2ft.png")
 marker = find_marker(image)
 focalLength = (marker[1][0] * KNOWN_DISTANCE) / KNOWN_WIDTH
 
