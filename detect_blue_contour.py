@@ -1,37 +1,37 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-while(1):		
-    _, frame = cap.read()
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    # lower_blue = np.array([110,50,50])
-    # upper_blue = np.array([130,255,255])
-    lower_blue = np.array([141,58,85])
-    upper_blue = np.array([255,255,255])
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    res = cv2.bitwise_and(frame,frame, mask= mask)
+def biggestContourI(contours):
+    maxVal = 0
+    maxI = None
+    for i in range(0, len(contours) - 1):
+        if len(contours[i]) > maxVal:
+            cs = contours[i]
+            maxVal = len(contours[i])
+            maxI = i
+    return maxI
+            
+cam = cv2.VideoCapture(0)
 
+while True:
+    ret_val, img = cam.read()
 
-    img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    ret, im = cv2.threshold(img_gray, 35, 120, cv2.THRESH_BINARY_INV)
-    contours, hierarchy  = cv2.findContours(im, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cnt=contours[0]
-    area=cv2.contourArea(cnt)
-    img = cv2.drawContours(frame, contours, -1, (0,255,75), 2)
-    x, y, w, h = cv2.boundingRect(cnt)
+    lower = np.array([141, 58, 85], dtype = "uint8")
+    higher = np.array([255, 255, 255], dtype = "uint8")
+    
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, w = img.shape[:2]
+    flt = cv2.inRange(hsv, lower, higher);
+    
+    contours0, hierarchy = cv2.findContours(flt, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-
-    cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
-    cv2.imshow('frame',frame)
-    cv2.imshow('mask',mask)
-    cv2.imshow('res',res)
-    cv2.imshow('img_gray',img_gray)
-
-    k = cv2.waitKey(5) & 0xFF
-    if k == 27:  
-        break
-	
-
+    # Only draw the biggest one
+    bc = biggestContourI(contours0)
+    cv2.drawContours(img,contours0, bc, (0,255,0), 3)
+    
+    cv2.imshow('my webcam', img)
+    cv2.imshow('flt', flt)
+    
+    if cv2.waitKey(1) == 27:
+        break  # esc to quit
 cv2.destroyAllWindows()
-cap.release()
