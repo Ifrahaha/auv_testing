@@ -9,7 +9,7 @@ def show_image(image):
     return 0
 
 
-image = cv2.imread('/home/crossfire/Programming projects/AUV2k19/self-test/auv1.jpg')
+image = cv2.imread('C:\Users\SHARIQ RAIS\auv_testing\blue.jpg')
 img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 ret, im = cv2.threshold(img_gray, 30, 255, cv2.THRESH_BINARY_INV)
 contours, hierarchy  = cv2.findContours(im, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
