@@ -58,20 +58,35 @@ def centroid_if_object_present(image, mask):
     return False, False
 
 
+def biggestContourI(contours):
+    maxVal = 0
+    maxI = None
+    for i in range(0, len(contours) - 1):
+        if len(contours[i]) > maxVal:
+            cs = contours[i]
+            maxVal = len(contours[i])
+            maxI = i
+    return maxI
+            
+
 def detect_blue()
-    _, frame = cap.read()
-	hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    ret_val, img = cam.read()
 
-	lower_blue = np.array([110,50,50])
-	upper_blue = np.array([130,255,255])
-
-	mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-	res = cv2.bitwise_and(frame,frame, mask= mask)
+    lower = np.array([141, 58, 85], dtype = "uint8")
+    higher = np.array([255, 255, 255], dtype = "uint8")
     
-	cv2.imshow('frame',frame)
-	cv2.imshow('mask',mask)
-	cv2.imshow('res',res)
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, w = img.shape[:2]
+    flt = cv2.inRange(hsv, lower, higher);
+    
+    contours0, hierarchy = cv2.findContours(flt, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Only draw the biggest one
+    bc = biggestContourI(contours0)
+    cv2.drawContours(img,contours0, bc, (0,255,0), 3)
+    
+    cv2.imshow('my webcam', img)
+    cv2.imshow('flt', flt)
 
 
 def draw_centroid(overlay, cx, cy):
