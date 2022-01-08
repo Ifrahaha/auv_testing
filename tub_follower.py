@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
-sys.path.insert(0, '/home/crossfire/Programming projects/auv_testing/AUV2k19/motion')
-import movement
+#sys.path.insert(0, '/home/crossfire/Programming projects/auv_testing/AUV2k19/motion')
+#import movement
 import cv2
 import numpy as np
 import time
@@ -12,7 +12,7 @@ cap = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 out_image = cv2.VideoWriter('recording-%s.avi' % time.time(), fourcc, 20.0, (640, 480))
 
-m = movement.Movement()
+#m = movement.Movement()
 
 # RED: 115-135
 # Yellow: 90-109
@@ -20,8 +20,8 @@ m = movement.Movement()
 def mask_image(image, color_no):
     hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
     # NOTE: Orange Gate not very clearly visible
-    lower_array = [numpy.array([115, 0, 0]), numpy.array([21, 0, 0]), numpy.array([40, 0, 0])]
-    upper_array = [numpy.array([135, 255, 255]), numpy.array([95, 255, 255]), numpy.array([47, 255, 255])]
+    lower_array = [np.array([115, 0, 0]), np.array([21, 0, 0]), np.array([40, 0, 0])]
+    upper_array = [np.array([135, 255, 255]), np.array([95, 255, 255]), np.array([47, 255, 255])]
     
     lower = lower_array[color_no]
     upper = upper_array[color_no]
@@ -33,7 +33,7 @@ def mask_image(image, color_no):
 
 
 def centroid_if_object_present(image, mask):
-    im2, contours, hierarchy = cv2.findContours(
+    contours, hierarchy = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     try:
@@ -184,14 +184,6 @@ def main():
         mask = mask_image(image, 1)
         centroid = centroid_if_object_present(image, mask)
         out_image.write(image)
-
-        if centroid:
-            (cx, cy) = centroid
-            # correct_error(cx, cy, image)
-        else:
-            print("Searching! Go Right!")
-            # m.right(100)
-            # m.pitch_control()
 
         cv2.imshow("Image", cv2.resize(image, (640, 480)))
         cv2.imshow("Mask", cv2.resize(mask, (640, 480)))
