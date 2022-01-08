@@ -33,6 +33,7 @@ while(1):
 	k = cv2.waitKey(5) & 0xFF
 	if k == 27:
 		break
+	
 
 # Destroys all of the HighGUI windows.
 cv2.destroyAllWindows()
