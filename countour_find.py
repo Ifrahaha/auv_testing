@@ -10,16 +10,16 @@ def show_image(image):
 
 
 image = cv2.imread('/home/crossfire/Programming projects/auv_testing/blue.jpg')
-img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-ret, im = cv2.threshold(img_gray, 100, 120, cv2.THRESH_BINARY_INV)
-contours, hierarchy  = cv2.findContours(im, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-cnt=contours[0]
-#print("\ncontours: ",contours)
-area=cv2.contourArea(cnt)
-img = cv2.drawContours(image, contours, -1, (0,255,75), 2)
-#print("\nContour area",area)
-x, y, w, h = cv2.boundingRect(cnt)
-cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+# img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# ret, im = cv2.threshold(img_gray, 100, 120, cv2.THRESH_BINARY_INV)
+# contours, hierarchy  = cv2.findContours(im, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+# cnt=contours[0]
+# #print("\ncontours: ",contours)
+# area=cv2.contourArea(cnt)
+# img = cv2.drawContours(image, contours, -1, (0,255,75), 2)
+# #print("\nContour area",area)
+# x, y, w, h = cv2.boundingRect(cnt)
+# cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
 
 kernal = np.ones((5, 5), "uint8")
 hsvFrame = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -38,5 +38,5 @@ for pic, contour in enumerate(contours):
 
 # print("\n\n\n",x,y,w,h)
 # show_image(im)
-show_image(img)
+show_image(image)
 
