@@ -20,8 +20,8 @@ out_image = cv2.VideoWriter('recording-%s.avi' % time.time(), fourcc, 20.0, (640
 def mask_image(image, color_no):
     hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
     # NOTE: Orange Gate not very clearly visible
-    lower_array = [np.array([115, 0, 0]), np.array([21, 0, 0]), np.array([40, 0, 0])]
-    upper_array = [np.array([135, 255, 255]), np.array([95, 255, 255]), np.array([47, 255, 255])]
+    lower_array = [np.array([112, 188, 46]), np.array([188, 0, 0]), np.array([46, 0, 0])]
+    upper_array = [np.array([188, 255, 89]), np.array([255, 255, 255]), np.array([89, 255, 255])]
     
     lower = lower_array[color_no]
     upper = upper_array[color_no]
