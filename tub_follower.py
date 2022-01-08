@@ -69,7 +69,7 @@ def biggestContourI(contours):
     return maxI
             
 
-def detect_blue()
+def detect_blue():
     ret_val, img = cam.read()
 
     lower = np.array([141, 58, 85], dtype = "uint8")
