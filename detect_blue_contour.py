@@ -33,5 +33,5 @@ while True:
     cv2.imshow('flt', flt)
     
     if cv2.waitKey(1) == 27:
-        break  # esc to quit
+        break  
 cv2.destroyAllWindows()
