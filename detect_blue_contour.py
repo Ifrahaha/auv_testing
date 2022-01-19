@@ -25,10 +25,25 @@ while True:
     
     contours0, hierarchy = cv2.findContours(flt, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+
+    cnt=contours0[0]
+    #print("\ncontours: ",contours)
+    area=cv2.contourArea(cnt)
+
     # Only draw the biggest one
     bc = biggestContourI(contours0)
     cv2.drawContours(img,contours0, bc, (0,255,0), 3)
+
+    if area>=1000:
+        print("forward")
+
+    cnt=contours0[0]
+    #print("\ncontours: ",contours)
+    area=cv2.contourArea(cnt)
     
+
+
+
     cv2.imshow('my webcam', img)
     cv2.imshow('flt', flt)
     
